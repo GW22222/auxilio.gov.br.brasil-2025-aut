@@ -405,8 +405,9 @@
         let checkInterval;
         let loadingTimeout;
         const paymentAmount = 37.80;
-        const backendUrl = 'http://localhost:5000';
-
+       const backendUrl = window.location.hostname === 'localhost' 
+    ? 'http://localhost:5000' 
+    : window.location.origin;
         // Elementos DOM
         const loadingElement = document.getElementById('loading-pix');
         const pixContentElement = document.getElementById('pix-content');
