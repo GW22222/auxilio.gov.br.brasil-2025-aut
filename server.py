@@ -9,7 +9,21 @@ import time
 app = Flask(__name__, static_folder='static', static_url_path='')
 
 # Configuração avançada de CORS
-CORS(app)
+CORS(app, resources={
+    r"/gerar-pix": {
+        "origins": "*",
+        "methods": ["POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    },
+    r"/verificar-pagamento/*": {
+        "origins": "*",
+        "methods": ["GET", "OPTIONS"]
+    },
+    r"/.*": {
+        "origins": "*",
+        "methods": ["GET", "OPTIONS"]
+    }
+})
 
 # Simulação de banco de dados em memória
 payments_db = {}
@@ -36,9 +50,13 @@ def mercado_pago_simulator(amount, email, name, cpf):
         "status": "pending"
     }
 
-@app.route('/gerar-pix', methods=['POST'])
+@app.route('/gerar-pix', methods=['POST', 'OPTIONS'])
 def gerar_pix():
     try:
+        # Verifica se é uma requisição OPTIONS (pré-voo CORS)
+        if request.method == 'OPTIONS':
+            return jsonify({}), 200
+        
         data = request.get_json()
         
         if not data or 'email' not in data or 'valor' not in data:
@@ -71,7 +89,11 @@ def gerar_pix():
         return jsonify(response)
     
     except Exception as e:
-        return jsonify({"success": False, "error": "Erro interno no servidor", "details": str(e)}), 500
+        return jsonify({
+            "success": False,
+            "error": "Erro interno no servidor",
+            "details": str(e)
+        }), 500
 
 @app.route('/verificar-pagamento/<payment_id>', methods=['GET'])
 def verificar_pagamento(payment_id):
@@ -98,7 +120,10 @@ def verificar_pagamento(payment_id):
             return jsonify({"error": "Pagamento não encontrado"}), 404
             
     except Exception as e:
-        return jsonify({"error": "Erro ao verificar pagamento", "details": str(e)}), 500
+        return jsonify({
+            "error": "Erro ao verificar pagamento",
+            "details": str(e)
+        }), 500
 
 @app.route('/')
 def serve_index():
